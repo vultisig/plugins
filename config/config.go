@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/spf13/viper"
 )
@@ -39,7 +40,8 @@ type Config struct {
 }
 
 func GetConfigure() (*Config, error) {
-	viper.SetConfigName("config")
+	configFileName := os.Getenv("CONFIG_FILE_NAME")
+	viper.SetConfigName(configFileName)
 	viper.AddConfigPath(".")
 	viper.AutomaticEnv()
 
@@ -61,5 +63,6 @@ func GetConfigure() (*Config, error) {
 	if err != nil {
 		return nil, fmt.Errorf("unable to decode into struct, %w", err)
 	}
+
 	return &cfg, nil
 }

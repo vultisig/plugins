@@ -34,7 +34,12 @@ func main() {
 	}
 
 	srv := asynq.NewServer(
-		asynq.RedisClientOpt{Addr: redisAddr},
+		asynq.RedisClientOpt{
+			Addr:     cfg.Redis.Host + ":" + cfg.Redis.Port,
+			Username: cfg.Redis.User,
+			Password: cfg.Redis.Password,
+			DB:       cfg.Redis.DB,
+		},
 		asynq.Config{
 			Logger:      logrus.StandardLogger(),
 			Concurrency: 10,
